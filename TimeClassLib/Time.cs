@@ -5,7 +5,10 @@ namespace TimeClassLib {
     /// <summary>
     /// Strut that represnts time value in format hh:mm:ss
     /// </summary>
-    public struct Time {
+    public struct Time : IEquatable<Time>, IComparable<Time> {
+
+        #region Properties
+
         /// <summary>
         /// Hours. Range 0-23
         /// </summary>
@@ -18,6 +21,10 @@ namespace TimeClassLib {
         /// Seconds. Range 0-59
         /// </summary>
         public byte Seconds => _seconds;
+
+        #endregion
+
+        #region Contructors
 
         /// <summary>
         /// Creates time value.
@@ -51,12 +58,41 @@ namespace TimeClassLib {
         /// Create time value from string. String must be in format hh:mm:ss
         /// </summary>
         /// <param name="time">Time in string. Must be in format hh:mm:ss</param>
-        public Time(string time) : this(GetHours(time), GetMinutes(time), GetSeconds(time)) {}
+        public Time(string time) : this(GetHours(time), GetMinutes(time), GetSeconds(time)) {
+            if(IsTimeWrongFormat(time)) throw new ArgumentException("Wrong time format");
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public override string ToString() => $"{ConvertToTimeFormatValue(_hours)}:{ConvertToTimeFormatValue(_minutes)}:{ConvertToTimeFormatValue(_seconds)}";
+
+        public bool Equals(Time other) {
+            return _hours == other._hours
+                && _minutes == other._minutes
+                && _seconds == other._seconds;
+        }
+
+        public int CompareTo(Time other) {
+            if (Hours == other.Hours) 
+                if(Minutes == other.Minutes)
+                    return Seconds.CompareTo(Seconds);
+                else
+                    return Minutes.CompareTo(other.Minutes);
+            else 
+                return Hours.CompareTo(other.Hours);
+        }
+
+        #endregion
+
+        #region Privates
 
         private readonly byte _hours;
         private readonly byte _minutes;
         private readonly byte _seconds;
 
+        private static string ConvertToTimeFormatValue(byte value) => value < 10 ? "0" + value.ToString() : value.ToString();
         private static bool IsTimeWrongFormat(string time) {
             return IsTimeWrongSize(time) || !Regex.IsMatch(time, @"(\d\d:\d\d:\d\d)");
         }
@@ -73,6 +109,8 @@ namespace TimeClassLib {
             if(time.Length != 8) throw new ArgumentException("Wrong string size");
             return Convert.ToByte(time.Substring(6, 2));
         }
+
+        #endregion
     }
 }
 

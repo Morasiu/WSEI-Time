@@ -134,6 +134,39 @@ namespace TimeClassLibTests {
             }
         }
 
+        [Fact]
+        public void ToString_Time_ShouldReturnFormattedString() {
+            // Arrange
+            var time = new Time(1, 2, 3);
+            // Act
+            var result = time.ToString();
+            // Assert
+            Assert.Equal("01:02:03", result);
+        }
 
+        [Fact]
+        public void Equals_SameTime_ShouldReturnTrue() {
+            // Arrange
+            var time = new Time(1, 2, 3);
+            var otherTime = new Time(1, 2, 3);
+            // Act
+            // Assert
+            Assert.True(time.Equals(otherTime));
+        }
+
+        [Fact]
+        public void Equals_DiffrentTime_ShouldReturnFalse() {
+            // Arrange
+            var time = new Time(1, 2, 3);
+            var otherTime = new Time(1, 2, 4);
+            // Act
+            // Assert
+            Assert.False(time.Equals(otherTime));
+        }
+
+        [Fact]
+        public void CompareTo_SameTime_ShouldReturnZero() {
+            //TODO
+        }
     }
 }
