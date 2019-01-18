@@ -50,18 +50,36 @@ namespace TimeClassLib {
         /// <summary>
         /// Create time value from string. String must be in format hh:mm:ss
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="time">Time in string. Must be in format hh:mm:ss</param>
         public Time(string time) : this(GetHours(time), GetMinutes(time), GetSeconds(time)) {
-            if(time.Length != 8) throw new ArgumentException("Wrong string foramt");
+            if(IsTimeWrongFormat(time)) throw new ArgumentException("Wrong string foramt");
+        }
+
+        private static bool IsTimeWrongFormat(string time) {
+            return NewMethod(time);
+        }
+
+        private static bool NewMethod(string time) {
+            return IsTimeWrongSize(time) || time[2] != ':' || time[5] != ':';
         }
 
         private readonly byte _hours;
         private readonly byte _minutes;
         private readonly byte _seconds;
 
-        private static byte GetHours(string time) => Convert.ToByte(time.Substring(0, 2));
-        private static byte GetMinutes(string time) => Convert.ToByte(time.Substring(3, 2));
-        private static byte GetSeconds(string time) => Convert.ToByte(time.Substring(6, 2));
+        private static bool IsTimeWrongSize(string time) => time.Length != 8;
+        private static byte GetHours(string time) {
+            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            return Convert.ToByte(time.Substring(0, 2));
+        }
+        private static byte GetMinutes(string time) {
+            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            return Convert.ToByte(time.Substring(3, 2));
+        }
+        private static byte GetSeconds(string time) {
+            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            return Convert.ToByte(time.Substring(6, 2));
+        }
     }
 }
 
