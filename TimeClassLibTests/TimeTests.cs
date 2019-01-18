@@ -121,5 +121,19 @@ namespace TimeClassLibTests {
             // Assert
             Assert.Throws<ArgumentException>(contructor);
         }
+
+        [Fact]
+        public void Properties_Readonly_ShouldBeImmutable() {
+            // Arrange
+            var properties = typeof(Time).GetProperties();
+            // Act
+            // Assert
+            Assert.True(properties.Length == 3);
+            foreach(var property in properties) {
+                Assert.False(property.CanWrite);
+            }
+        }
+
+
     }
 }

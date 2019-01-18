@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace TimeClassLib {
     /// <summary>
@@ -33,7 +34,6 @@ namespace TimeClassLib {
             _seconds = seconds;
         }
 
-
         /// <summary>
         /// Create time value, with given hours, minutes 0, seconds 0.
         /// </summary>
@@ -51,22 +51,15 @@ namespace TimeClassLib {
         /// Create time value from string. String must be in format hh:mm:ss
         /// </summary>
         /// <param name="time">Time in string. Must be in format hh:mm:ss</param>
-        public Time(string time) : this(GetHours(time), GetMinutes(time), GetSeconds(time)) {
-            if(IsTimeWrongFormat(time)) throw new ArgumentException("Wrong string foramt");
-        }
-
-        private static bool IsTimeWrongFormat(string time) {
-            return NewMethod(time);
-        }
-
-        private static bool NewMethod(string time) {
-            return IsTimeWrongSize(time) || time[2] != ':' || time[5] != ':';
-        }
+        public Time(string time) : this(GetHours(time), GetMinutes(time), GetSeconds(time)) {}
 
         private readonly byte _hours;
         private readonly byte _minutes;
         private readonly byte _seconds;
 
+        private static bool IsTimeWrongFormat(string time) {
+            return IsTimeWrongSize(time) || !Regex.IsMatch(time, @"(\d\d:\d\d:\d\d)");
+        }
         private static bool IsTimeWrongSize(string time) => time.Length != 8;
         private static byte GetHours(string time) {
             if(time.Length != 8) throw new ArgumentException("Wrong string size");
