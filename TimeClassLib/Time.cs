@@ -77,13 +77,13 @@ namespace TimeClassLib {
         public int CompareTo(Time other) {
             if (Hours == other.Hours) 
                 if(Minutes == other.Minutes)
-                    return Seconds.CompareTo(Seconds);
+                    return Seconds.CompareTo(other.Seconds);
                 else
                     return Minutes.CompareTo(other.Minutes);
             else 
                 return Hours.CompareTo(other.Hours);
         }
-
+        
         #endregion
 
         #region Privates
@@ -110,7 +110,33 @@ namespace TimeClassLib {
             return Convert.ToByte(time.Substring(6, 2));
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Operators
+
+		public static bool operator ==(Time time1, Time time2) => time1.Equals(time2);
+		public static bool operator !=(Time time1, Time time2) => !time1.Equals(time2);
+		public static bool operator <(Time time1, Time time2) => time1.CompareTo(time2) < 0;
+		public static bool operator >(Time time1, Time time2) => time1.CompareTo(time2) > 0;
+		public static bool operator <=(Time time1, Time time2) => time1.CompareTo(time2) <= 0;
+		public static bool operator >=(Time time1, Time time2) => time1.CompareTo(time2) >= 0;
+		public static Time operator +(Time time1, Time time2) {
+			int seconds = 0, minutes = 0, hours = 0;
+			seconds = time1.Seconds + time2.Seconds;
+			if (seconds > 59) {
+				minutes = seconds / 60;
+				seconds = seconds % 60;
+			}
+			minutes += time1.Minutes + time2.Minutes;
+			if (minutes > 59) {
+				hours = minutes / 60;
+				minutes = minutes % 60;
+			}
+			hours += time1.Hours + time2.Hours;
+			if (hours > 23) throw new OverflowException("Hours greater than 23");
+			return new Time((byte) hours, (byte) minutes, (byte) seconds);
+		}
+		#endregion
+	}
 }
 

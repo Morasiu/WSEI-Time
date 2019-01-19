@@ -49,7 +49,7 @@ namespace TimeClassLibTests {
             byte hours = 1;
             byte tooManyMminutes = 60;
             // Act
-            Action conctructor = () => new Time(hours, tooManyMminutes);
+            Func<object> conctructor = () => new Time(hours, tooManyMminutes);
             // Assert
             Assert.Throws<ArgumentException>(conctructor);
         }
@@ -166,7 +166,192 @@ namespace TimeClassLibTests {
 
         [Fact]
         public void CompareTo_SameTime_ShouldReturnZero() {
-            //TODO
-        }
-    }
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 3);
+			// Act
+			var result = time.CompareTo(otherTime);
+			// Assert
+			Assert.Equal(0, result);
+		}
+
+		[Fact]
+		public void CompareTo_GreaterTime_ShouldReturnMinusOne() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time.CompareTo(otherTime);
+			// Assert
+			Assert.Equal(-1, result);
+		}
+
+		[Fact]
+		public void CompareTo_SmallerTime_ShouldReturnOne() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 2);
+			// Act
+			var result = time.CompareTo(otherTime);
+			// Assert
+			Assert.Equal(1, result);
+		}
+
+		[Fact]
+		public void EqualsOperator_SameTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 3);
+			// Act
+			var result = time == otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void EqualsOperator_DiffrentTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(2, 3, 4);
+			// Act
+			var result = time == otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void NotEqualsOperator_DiffrentTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time != otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void NotEqualsOperator_SameTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 3);
+			// Act
+			var result = time != otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void GreaterOperator_SmallerTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 2);
+			// Act
+			var result = time > otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void GreaterOperator_GreaterTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time > otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void GreaterOrEqualOperator_SmallerTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 2);
+			// Act
+			var result = time >= otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void GreaterOrEqualOperator_GreaterTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time >= otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void LessOperator_SmallerTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 2);
+			// Act
+			var result = time < otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void LessOperator_GreaterTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time < otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void LessOrEqualOperator_SmallerTime_ShouldReturnFalse() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 2);
+			// Act
+			var result = time <= otherTime;
+			// Assert
+			Assert.False(result);
+		}
+
+		[Fact]
+		public void LessOrEqualOperator_GreaterTime_ShouldReturnTrue() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 4);
+			// Act
+			var result = time <= otherTime;
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void PlusOperator_SameTime_ShouldReturnDoubledTime() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 3);
+			var expectedTime = new Time(2, 4, 6);
+			// Act
+			var result = time + otherTime;
+			// Assert
+			Assert.Equal(expectedTime, result);
+		}
+
+		[Fact]
+		public void PlusOperator_ToMuchTime_ShouldThrowOverflowException() {
+			// Arrange
+			var time = new Time(23, 59, 59);
+			var otherTime = new Time(0, 0, 1);
+			// Act
+			Func<object> result = () => time + otherTime ;
+			// Assert
+			Assert.Throws<OverflowException>(result);
+		}
+
+		public Time a() => new Time(1) + new Time(2);
+	}
 }
