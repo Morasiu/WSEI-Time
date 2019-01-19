@@ -352,6 +352,27 @@ namespace TimeClassLibTests {
 			Assert.Throws<OverflowException>(result);
 		}
 
-		public Time a() => new Time(1) + new Time(2);
+		[Fact]
+		public void MinusOperator_SameTime_ShouldReturnTimeZero() {
+			// Arrange
+			var time = new Time(1, 2, 3);
+			var otherTime = new Time(1, 2, 3);
+			var expectedTime = new Time(0, 0, 0);
+			// Act
+			var result = time - otherTime;
+			// Assert
+			Assert.Equal(expectedTime, result);
+		}
+
+		[Fact]
+		public void MinusOperator_ToMuchTime_ShouldThrowOverflowException() {
+			// Arrange
+			var time = new Time(0, 0, 1);
+			var otherTime = new Time(0, 0, 2);
+			// Act
+			Func<object> result = () => time - otherTime;
+			// Assert
+			Assert.Throws<OverflowException>(result);
+		}
 	}
 }

@@ -136,6 +136,23 @@ namespace TimeClassLib {
 			if (hours > 23) throw new OverflowException("Hours greater than 23");
 			return new Time((byte) hours, (byte) minutes, (byte) seconds);
 		}
+
+		public static Time operator -(Time time1, Time time2) {
+			int seconds = 0, minutes = 0, hours = 0;
+			seconds = time1.Seconds - time2.Seconds;
+			if (seconds < 0) {
+				minutes -= (seconds / 60) + 1;
+				seconds = 60 - Math.Abs(seconds);
+			}
+			minutes += time1.Minutes - time2.Minutes;
+			if (minutes < 0) {
+				hours -= (minutes / 60) + 1;
+				minutes = 60 - Math.Abs(minutes);
+			}
+			hours += time1.Hours - time2.Hours;
+			if (hours < 0) throw new OverflowException("Hours greater than 23"); // TODO <=
+			return new Time((byte)hours, (byte)minutes, (byte)seconds);
+		}
 		#endregion
 	}
 }
