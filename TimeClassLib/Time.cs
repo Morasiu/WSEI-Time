@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace TimeClassLib {
     /// <summary>
-    /// Strut that represnts time value in format hh:mm:ss
+    /// Struct that represnts time value in format hh:mm:ss
     /// </summary>
     public struct Time : IEquatable<Time>, IComparable<Time> {
 
@@ -66,14 +66,28 @@ namespace TimeClassLib {
 
         #region Public methods
 
+        /// <summary>
+        /// Converts Time to string value.
+        /// </summary>
+        /// <returns>Time in format hh:mm;ss</returns>
         public override string ToString() => $"{ConvertToTimeFormatValue(_hours)}:{ConvertToTimeFormatValue(_minutes)}:{ConvertToTimeFormatValue(_seconds)}";
 
+        /// <summary>
+        /// Compares two Times
+        /// </summary>
+        /// <param name="other">Second time to compare</param>
+        /// <returns>True, if values (hours, minutes, seconds) of both Time are equals</returns>
         public bool Equals(Time other) {
             return _hours == other._hours
                 && _minutes == other._minutes
                 && _seconds == other._seconds;
         }
 
+        /// <summary>
+        /// Compares two Times
+        /// </summary>
+        /// <param name="other">Second time to compare</param>
+        /// <returns>Same as int comparing</returns>
         public int CompareTo(Time other) {
             if (Hours == other.Hours) 
                 if(Minutes == other.Minutes)
@@ -136,7 +150,6 @@ namespace TimeClassLib {
 			if (hours > 23) throw new OverflowException("Hours greater than 23");
 			return new Time((byte) hours, (byte) minutes, (byte) seconds);
 		}
-
 		public static Time operator -(Time time1, Time time2) {
 			int seconds = 0, minutes = 0, hours = 0;
 			seconds = time1.Seconds - time2.Seconds;
@@ -150,7 +163,7 @@ namespace TimeClassLib {
 				minutes = 60 - Math.Abs(minutes);
 			}
 			hours += time1.Hours - time2.Hours;
-			if (hours < 0) throw new OverflowException("Hours greater than 23"); // TODO <=
+			if (hours < 0) throw new OverflowException("Time was less than 00:00:00");
 			return new Time((byte)hours, (byte)minutes, (byte)seconds);
 		}
 		#endregion
