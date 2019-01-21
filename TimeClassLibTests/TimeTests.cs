@@ -47,9 +47,9 @@ namespace TimeClassLibTests {
         public void Constructor_Hours60Minutes_ShoudlThrowArgumentExcpetion() {
             // Arrange
             byte hours = 1;
-            byte tooManyMminutes = 60;
+            byte tooManyMinutes = 60;
             // Act
-            Func<object> conctructor = () => new Time(hours, tooManyMminutes);
+            Func<object> conctructor = () => new Time(hours, tooManyMinutes);
             // Assert
             Assert.Throws<ArgumentException>(conctructor);
         }

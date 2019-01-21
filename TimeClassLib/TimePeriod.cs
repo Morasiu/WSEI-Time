@@ -25,9 +25,9 @@ namespace TimeClassLib {
             _seconds = seconds + minutes * 60 + hours * 60 * 60;
         }
 
-        public TimePeriod(uint hours, byte minutes) : this(hours, minutes, 0) { }
+        public TimePeriod( byte minutes, byte seconds) : this(0, minutes, seconds) { }
 
-        public TimePeriod(uint hours) : this(hours, 0, 0) { }
+        public TimePeriod(byte seconds) : this(0, 0, seconds) { }
 
         #endregion
 

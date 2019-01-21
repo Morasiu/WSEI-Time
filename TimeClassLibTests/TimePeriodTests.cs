@@ -5,13 +5,13 @@ using Xunit;
 namespace TimeClassLibTests {
     public class TimePeriodTests {
         [Fact]
-        public void Constructor_Hours_ShoudlReturnTimePeriod() {
+        public void Constructor_Seconds_ShoudlReturnTimePeriod() {
             // Arrange
-            byte expectedHours = 1;
+            byte expectedHours = 0;
             byte expectedMinutes = 0;
-            byte expectedSeconds = 0;
+            byte expectedSeconds = 1;
             // Act
-            var timePeriod = new TimePeriod(expectedHours);
+            var timePeriod = new TimePeriod(expectedSeconds);
             // Assert
             Assert.Equal(expectedHours, timePeriod.Hours);
             Assert.Equal(expectedMinutes, timePeriod.Minutes);
@@ -19,13 +19,13 @@ namespace TimeClassLibTests {
         }
 
         [Fact]
-        public void Constructor_HoursMinutes_ShoudlReturnTimePeriod() {
+        public void Constructor_MinutesSeconds_ShoudlReturnTimePeriod() {
             // Arrange
-            byte expectedHours = 1;
+            byte expectedHours = 0;
             byte expectedMinutes = 1;
-            byte expectedSeconds = 0;
+            byte expectedSeconds = 1;
             // Act
-            var timePeriod = new TimePeriod(expectedHours, expectedMinutes);
+            var timePeriod = new TimePeriod(expectedMinutes, expectedSeconds);
             // Assert
             Assert.Equal(expectedHours, timePeriod.Hours);
             Assert.Equal(expectedMinutes, timePeriod.Minutes);
@@ -33,12 +33,12 @@ namespace TimeClassLibTests {
         }
 
         [Fact]
-        public void Constructor_Hours60Minutes_ShoudlThrowArgumentExcpetion() {
+        public void Constructor_MinutesAnd60Seconds_ShoudlThrowArgumentExcpetion() {
             // Arrange
-            byte hours = 1;
-            byte tooManyMminutes = 60;
+            byte minutes = 1;
+            byte tooManySeconds = 60;
             // Act
-            Func<object> conctructor = () => new TimePeriod(hours, tooManyMminutes);
+            Func<object> conctructor = () => new TimePeriod(minutes, tooManySeconds);
             // Assert
             Assert.Throws<ArgumentException>(conctructor);
         }
