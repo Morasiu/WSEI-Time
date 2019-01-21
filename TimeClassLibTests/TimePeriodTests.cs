@@ -68,5 +68,17 @@ namespace TimeClassLibTests {
             // Assert
             Assert.Throws<ArgumentException>(conctructor);
         }
+
+        [Fact]
+        public void Constructor_TwoTimes_ShoudlReturnTimePeriod() {
+            // Arrange
+            var firstTime = new Time(1, 0, 0);
+            var secondTime = new Time(2, 0, 0);
+            var expectedTimePeriod = new TimePeriod(1, 0, 0);
+            // Act
+            var result = new TimePeriod(firstTime, secondTime);
+            // Assert
+            Assert.Equal(expectedTimePeriod, result);
+        }
     }
 }
