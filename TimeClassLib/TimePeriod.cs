@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TimeClassLib {
@@ -17,13 +18,14 @@ namespace TimeClassLib {
         /// <param name="minutes">Minutes, must be in range 0-59</param>
         /// <param name="seconds">Seconds, must be in range 0-59</param>
         public TimePeriod(uint hours, byte minutes, byte seconds) {
-            if(IsAnyParamLessThanZero(hours, minutes, seconds))
-                throw new ArgumentException("Parameter was less than 0");
-            if(minutes > 59) throw new ArgumentException("Minutes were more than 59");
-            if(seconds > 59) throw new ArgumentException("Seconds were more than 59");
+            CheckIfParamsArelessThanZero(hours, minutes, seconds);
+            CheckIfMinutesAreInRange(minutes);
+            CheckIfSecondsAreInRange(seconds);
 
             _seconds = seconds + minutes * 60 + hours * 60 * 60;
         }
+
+
 
 
         /// <summary>
@@ -49,6 +51,29 @@ namespace TimeClassLib {
             GetHoursDiffrence(firstTime, secondTime), 
             GetMinutesDiffrence(firstTime, secondTime), 
             GetSecondsDiffrence(firstTime, secondTime)) { }
+
+        /// <summary>
+        /// Generates time period from string (hhhh:mm:ss)
+        /// </summary>
+        /// <param name="formattedTime">String in format hhhh:mm:ss</param>
+        public TimePeriod(string formattedTime) {
+            var timeStrings = formattedTime.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            CheckTimeFormat(timeStrings);
+            uint hours; byte minutes; byte seconds;
+            try {
+                hours = Convert.ToUInt32(timeStrings[0]);
+                minutes = Convert.ToByte(timeStrings[1]);
+                seconds = Convert.ToByte(timeStrings[2]);
+            } catch (Exception) {
+                throw new ArgumentException("Wrong format");
+            }
+
+            CheckIfParamsArelessThanZero(hours, minutes, seconds);
+            CheckIfMinutesAreInRange(minutes);
+            CheckIfSecondsAreInRange(seconds);
+            _seconds = hours * 60 * 60 + minutes * 60 + seconds;
+        } 
+
 
         #endregion
 
@@ -98,6 +123,28 @@ namespace TimeClassLib {
 
             return timeDiffrence;
         }
+
+        private static void CheckIfSecondsAreInRange(byte seconds) {
+            if(seconds > 59) throw new ArgumentException("Seconds were more than 59");
+        }
+
+        private static void CheckIfMinutesAreInRange(byte minutes) {
+            if(minutes > 59) throw new ArgumentException("Minutes were more than 59");
+        }
+
+        private static void CheckIfParamsArelessThanZero(uint hours, byte minutes, byte seconds) {
+            if(IsAnyParamLessThanZero(hours, minutes, seconds))
+                throw new ArgumentException("Parameter was less than 0");
+        }
+
+        private static void CheckTimeFormat(string[] timeStrings) {
+            if(timeStrings.Length != 3 || ConatinsDigits(timeStrings)) throw new ArgumentException("Wrong format");
+        }
+
+        private static bool ConatinsDigits(string[] timeStrings) {
+            return timeStrings.All(time => time.All(char.IsDigit));
+        }
+
         #endregion
     }
 }

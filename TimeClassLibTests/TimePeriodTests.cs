@@ -72,9 +72,9 @@ namespace TimeClassLibTests {
         [Fact]
         public void Constructor_TwoTimes_ShoudlReturnTimePeriod() {
             // Arrange
-            var firstTime = new Time(1, 0, 0);
-            var secondTime = new Time(2, 0, 0);
-            var expectedTimePeriod = new TimePeriod(1, 0, 0);
+            var firstTime = new Time(1, 1, 1);
+            var secondTime = new Time(2, 2, 2);
+            var expectedTimePeriod = new TimePeriod(1, 1, 1);
             // Act
             var result = new TimePeriod(firstTime, secondTime);
             // Assert
