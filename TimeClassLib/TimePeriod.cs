@@ -25,16 +25,12 @@ namespace TimeClassLib {
             _seconds = seconds + minutes * 60 + hours * 60 * 60;
         }
 
-
-
-
         /// <summary>
         /// Generates time period.
         /// </summary>
         /// <param name="minutes">Minutes, must be in range 0-59</param>
         /// <param name="seconds">Seconds, must be in range 0-59</param>
         public TimePeriod( byte minutes, byte seconds) : this(0, minutes, seconds) { }
-
 
         /// <summary>
         /// Generates time period.
@@ -74,7 +70,6 @@ namespace TimeClassLib {
             _seconds = hours * 60 * 60 + minutes * 60 + seconds;
         } 
 
-
         #endregion
 
         #region Properties
@@ -91,6 +86,15 @@ namespace TimeClassLib {
         /// Seconds. Range 0-59
         /// </summary>
         public int Seconds => (int) _seconds % 3600 % 60;
+
+        #endregion
+
+        #region Methods
+
+        public override string ToString() => 
+            $"{ConvertToTimeFormatValue((uint) Hours)}:" +
+            $"{ConvertToTimeFormatValue((uint) Minutes)}:" +
+            $"{ConvertToTimeFormatValue((uint) Seconds)}";
 
         #endregion
 
@@ -138,12 +142,11 @@ namespace TimeClassLib {
         }
 
         private static void CheckTimeFormat(string[] timeStrings) {
-            if(timeStrings.Length != 3 || ConatinsDigits(timeStrings)) throw new ArgumentException("Wrong format");
+            if(timeStrings.Length != 3 || !ConatinsDigits(timeStrings)) throw new ArgumentException("Wrong format");
         }
 
-        private static bool ConatinsDigits(string[] timeStrings) {
-            return timeStrings.All(time => time.All(char.IsDigit));
-        }
+        private static bool ConatinsDigits(string[] timeStrings) => timeStrings.All(time => time.All(c => char.IsDigit(c)));
+        private static string ConvertToTimeFormatValue(uint value) => value < 10 ? "0" + value.ToString() : value.ToString();
 
         #endregion
     }

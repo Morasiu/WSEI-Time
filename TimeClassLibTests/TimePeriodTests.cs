@@ -80,5 +80,69 @@ namespace TimeClassLibTests {
             // Assert
             Assert.Equal(expectedTimePeriod, result);
         }
+
+        [Fact]
+        public void Contructor_CorrectString_ShouldReturnTimePeriod() {
+            // Arrange
+            string formattedTime = "110:10:10";
+            // Act
+            var timePeriod = new TimePeriod(formattedTime);
+            // Assert
+            Assert.Equal(110, timePeriod.Hours);
+            Assert.Equal(10, timePeriod.Minutes);
+            Assert.Equal(10, timePeriod.Seconds);
+        }
+
+        [Fact]
+        public void Contructor_WrongStringFormat_ShouldThrowArgumentExcpetion() {
+            // Arrange
+            string formattedTime = "10-10-10";
+            // Act
+            Action contructor = () => new TimePeriod(formattedTime);
+            // Assert
+            Assert.Throws<ArgumentException>(contructor);
+        }
+
+        [Fact]
+        public void Contructor_EmptyString_ShouldThrowArgumentExcpetion() {
+            // Arrange
+            string emptyString = string.Empty;
+            // Act
+            Action contructor = () => new TimePeriod(emptyString);
+            // Assert
+            Assert.Throws<ArgumentException>(contructor);
+        }
+
+        [Fact]
+        public void Contructor_StringWithTooLargeValues_ShouldThrowArgumentExcpetion() {
+            // Arrange
+            string stringWithTooLargeValues = "24:60:60";
+            // Act
+            Action contructor = () => new TimePeriod(stringWithTooLargeValues);
+            // Assert
+            Assert.Throws<ArgumentException>(contructor);
+        }
+
+        [Fact]
+        public void Properties_Readonly_ShouldBeImmutable() {
+            // Arrange
+            var properties = typeof(TimePeriod).GetProperties();
+            // Act
+            // Assert
+            Assert.True(properties.Length == 3);
+            foreach(var property in properties) {
+                Assert.False(property.CanWrite);
+            }
+        }
+
+        [Fact]
+        public void ToString_TimePeriod_ShouldReturnFormattedString() {
+            // Arrange
+            var timePeriod = new TimePeriod(100, 2, 3);
+            // Act
+            var result = timePeriod.ToString();
+            // Assert
+            Assert.Equal("100:02:03", result);
+        }
     }
 }
