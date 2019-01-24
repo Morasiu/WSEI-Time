@@ -112,15 +112,15 @@ namespace TimeClassLib {
         }
         private static bool IsTimeWrongSize(string time) => time.Length != 8;
         private static byte GetHours(string time) {
-            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            if(IsTimeWrongSize(time)) throw new ArgumentException("Wrong string size");
             return Convert.ToByte(time.Substring(0, 2));
         }
         private static byte GetMinutes(string time) {
-            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            if(IsTimeWrongSize(time)) throw new ArgumentException("Wrong string size");
             return Convert.ToByte(time.Substring(3, 2));
         }
         private static byte GetSeconds(string time) {
-            if(time.Length != 8) throw new ArgumentException("Wrong string size");
+            if(IsTimeWrongSize(time)) throw new ArgumentException("Wrong string size");
             return Convert.ToByte(time.Substring(6, 2));
         }
 
