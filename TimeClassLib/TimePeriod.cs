@@ -7,7 +7,7 @@ namespace TimeClassLib {
     /// <summary>
     /// Struct that represents time duration.
     /// </summary>
-    public struct TimePeriod {
+    public struct TimePeriod { //TODO IEqatable IComparable
 
         #region Contructors
 
