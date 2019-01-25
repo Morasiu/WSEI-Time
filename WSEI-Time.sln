@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeClassLib", "TimeClassLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeClassLibTests", "TimeClassLibTests\TimeClassLibTests.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stoper", "Stoper\Stoper.csproj", "{B28F288E-650F-41A4-AF48-239D259BCBA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7FD4316-CAB3-4B64-B098-5C01BF137CC1} = {C7FD4316-CAB3-4B64-B098-5C01BF137CC1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minutnik", "Minutnik\Minutnik.csproj", "{993E81AE-B858-4E03-866D-160584BEE558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,14 @@ Global
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28F288E-650F-41A4-AF48-239D259BCBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28F288E-650F-41A4-AF48-239D259BCBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28F288E-650F-41A4-AF48-239D259BCBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28F288E-650F-41A4-AF48-239D259BCBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{993E81AE-B858-4E03-866D-160584BEE558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{993E81AE-B858-4E03-866D-160584BEE558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{993E81AE-B858-4E03-866D-160584BEE558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{993E81AE-B858-4E03-866D-160584BEE558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
