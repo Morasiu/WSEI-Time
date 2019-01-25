@@ -7,7 +7,7 @@ namespace TimeClassLib {
     /// <summary>
     /// Struct that represents time duration.
     /// </summary>
-    public struct TimePeriod { //TODO IEqatable IComparable
+    public struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod> {
 
         #region Contructors
 
@@ -96,6 +96,51 @@ namespace TimeClassLib {
             $"{ConvertToTimeFormatValue((uint) Minutes)}:" +
             $"{ConvertToTimeFormatValue((uint) Seconds)}";
 
+        public bool Equals(TimePeriod other) => _seconds == other._seconds;
+
+        public int CompareTo(TimePeriod other) =>_seconds.CompareTo(other._seconds);
+
+        #endregion
+
+        #region Operators
+
+        public static bool operator ==(TimePeriod timePeriod, TimePeriod other) => timePeriod.Equals(other);
+        public static bool operator !=(TimePeriod timePeriod, TimePeriod other) => !timePeriod.Equals(other);
+        public static bool operator <(TimePeriod time1, TimePeriod time2) => time1.CompareTo(time2) < 0;
+        public static bool operator >(TimePeriod time1, TimePeriod time2) => time1.CompareTo(time2) > 0;
+        public static bool operator <=(TimePeriod time1, TimePeriod time2) => time1.CompareTo(time2) <= 0;
+        public static bool operator >=(TimePeriod time1, TimePeriod time2) => time1.CompareTo(time2) >= 0;
+        public static TimePeriod operator +(TimePeriod time1, TimePeriod time2) {
+            int seconds = 0, minutes = 0, hours = 0;
+            seconds = time1.Seconds + time2.Seconds;
+            if(seconds > 59) {
+                minutes = seconds / 60;
+                seconds = seconds % 60;
+            }
+            minutes += time1.Minutes + time2.Minutes;
+            if(minutes > 59) {
+                hours = minutes / 60;
+                minutes = minutes % 60;
+            }
+            hours += time1.Hours + time2.Hours;
+            return new TimePeriod((uint)hours, (byte)minutes, (byte)seconds);
+        }
+        public static TimePeriod operator -(TimePeriod time1, TimePeriod time2) {
+            int seconds = 0, minutes = 0, hours = 0;
+            seconds = time1.Seconds - time2.Seconds;
+            if(seconds < 0) {
+                minutes -= (seconds / 60) + 1;
+                seconds = 60 - Math.Abs(seconds);
+            }
+            minutes += time1.Minutes - time2.Minutes;
+            if(minutes < 0) {
+                hours -= (minutes / 60) + 1;
+                minutes = 60 - Math.Abs(minutes);
+            }
+            hours += time1.Hours - time2.Hours;
+            if(hours < 0) throw new OverflowException("Time was less than 00:00:00");
+            return new TimePeriod((uint) hours, (byte)minutes, (byte)seconds);
+        }
         #endregion
 
         #region Privates

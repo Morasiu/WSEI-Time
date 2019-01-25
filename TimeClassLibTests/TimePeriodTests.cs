@@ -144,5 +144,226 @@ namespace TimeClassLibTests {
             // Assert
             Assert.Equal("100:02:03", result);
         }
+
+
+        [Fact]
+        public void Equals_SameTimePeriods_ShouldReturnTrue() {
+            // Arrange
+            var timePeriod = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            // Act
+            // Assert
+            Assert.True(timePeriod.Equals(otherTimePeriod));
+        }
+
+        [Fact]
+        public void Equals_DiffrentTimePeriods_ShouldReturnFalse() {
+            // Arrange
+            var timePeriod = new TimePeriod(1, 2, 4);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            // Act
+            // Assert
+            Assert.False(timePeriod.Equals(otherTimePeriod));
+        }
+
+        [Fact]
+        public void CompareTo_SameTimePeriod_ShouldReturnZero() {
+            // Arrange
+            var timePeriod = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            // Act
+            var result = timePeriod.CompareTo(otherTimePeriod);
+            // Assert
+            Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public void CompareTo_GreaterTimePeriod_ShouldReturnMinusOne() {
+            // Arrange
+            var timePeriod = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = timePeriod.CompareTo(otherTimePeriod);
+            // Assert
+            Assert.Equal(-1, result);
+        }
+
+        [Fact]
+        public void CompareTo_SmallerTimePeriod_ShouldReturnOne() {
+            // Arrange
+            var timePeriod = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 2);
+            // Act
+            var result = timePeriod.CompareTo(otherTimePeriod);
+            // Assert
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void EqualsOperator_SameTime_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            // Act
+            var result = time == otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void EqualsOperator_DiffrentTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(2, 3, 4);
+            // Act
+            var result = time == otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void NotEqualsOperator_DiffrentTimePeriod_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = time != otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void NotEqualsOperator_SameTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            // Act
+            var result = time != otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void GreaterOperator_SmallerTimePeriod_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 2);
+            // Act
+            var result = time > otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void GreaterOperator_GreaterTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = time > otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void GreaterOrEqualOperator_SmallerTimePeriod_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 2);
+            // Act
+            var result = time >= otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void GreaterOrEqualOperator_GreaterTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = time >= otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void LessOperator_SmallerTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 2);
+            // Act
+            var result = time < otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void LessOperator_GreaterTimePeriod_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = time < otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void LessOrEqualOperator_SmallerTimePeriod_ShouldReturnFalse() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 2);
+            // Act
+            var result = time <= otherTimePeriod;
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void LessOrEqualOperator_GreaterTimePeriod_ShouldReturnTrue() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 4);
+            // Act
+            var result = time <= otherTimePeriod;
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void PlusOperator_SameTimePeriod_ShouldReturnDoubledTimePeriod() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            var expectedTimePeriod = new TimePeriod(2, 4, 6);
+            // Act
+            var result = time + otherTimePeriod;
+            // Assert
+            Assert.Equal(expectedTimePeriod, result);
+        }
+
+        [Fact]
+        public void MinusOperator_SameTimePeriod_ShouldReturnTimePeriodZero() {
+            // Arrange
+            var time = new TimePeriod(1, 2, 3);
+            var otherTimePeriod = new TimePeriod(1, 2, 3);
+            var expectedTimePeriod = new TimePeriod(0, 0, 0);
+            // Act
+            var result = time - otherTimePeriod;
+            // Assert
+            Assert.Equal(expectedTimePeriod, result);
+        }
+
+        [Fact]
+        public void MinusOperator_ToMuchTimePeriod_ShouldThrowOverflowException() {
+            // Arrange
+            var time = new TimePeriod(0, 0, 1);
+            var otherTimePeriod = new TimePeriod(0, 0, 2);
+            // Act
+            Func<object> result = () => time - otherTimePeriod;
+            // Assert
+            Assert.Throws<OverflowException>(result);
+        }
     }
 }
